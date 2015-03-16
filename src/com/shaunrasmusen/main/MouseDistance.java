@@ -7,16 +7,12 @@ import java.awt.PointerInfo;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import javax.imageio.ImageIO;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
@@ -25,7 +21,6 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.AngelCodeFont;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.opengl.ImageIOImageData;
 
 public class MouseDistance {
 
@@ -109,9 +104,9 @@ public class MouseDistance {
 	}
 
 	public void showStats() {
-		Display.setLocation((int) (dim.getWidth()) - 300, 0);
+		Display.setLocation((int) (dim.getWidth()) - 400, 0);
 		try {
-			Display.setDisplayMode(new DisplayMode(300, 151));
+			Display.setDisplayMode(new DisplayMode(400, 151));
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
@@ -148,12 +143,12 @@ public class MouseDistance {
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 			
 			font.drawString(3, 31, "The cursor has:");
-			font.drawString(3, 53, "crossed Oregon " + (int) ((mi * 5280) + ft) / 2117280 + " time(s),");
-			font.drawString(3, 75, "gone down the Mississippi " + (int) ((mi * 5280) + ft) / 12249600 + " time(s),");
-			font.drawString(3, 97, "crossed the United States " + (int) ((mi * 5280) + ft) / 15840000 + " time(s),");
-			font.drawString(3, 119, "crossed the Pacific Ocean " + (int) ((mi * 5280) + ft) / 29040000 + " time(s),");
-			font.drawString(3, 141, "circled the Earth " + (int) ((mi * 5280) + ft) / 131477280 + " time(s),");
-			font.drawString(3, 163, "gone to the Moon " + (int) ((mi * 5280) + ft) / 1261392000 + " time(s).");
+			font.drawString(3, 53, "- climbed the Empire State Building " + (int) ((mi * 5280) + ft) /  		1454 + " time(s),");
+			font.drawString(3, 75, "- dove down the Mariana Trench " + (int) ((mi * 5280) + ft) / 				36070 + " time(s),");
+			font.drawString(3, 97, "- gone to the International Space Station " + (int) ((mi * 5280) + ft) / 	1314720 + " time(s),");
+			font.drawString(3, 119, "- reached the Earth's core " + (int) ((mi * 5280) + ft) / 					20898240 + " time(s),");
+			font.drawString(3, 141, "- circled the Earth " + (int) ((mi * 5280) + ft) / 						131477280 + " time(s),");
+			font.drawString(3, 163, "- gone to the Moon " + (int) ((mi * 5280) + ft) / 							1261392000 + " time(s).");
 
 			Display.sync(30);
 			Display.update();
@@ -216,7 +211,6 @@ public class MouseDistance {
 		Display.setTitle("Mouse Distance Tracker");
 		Display.setLocation((int) (dim.getWidth()) - 250, 0);
 		try {
-			Display.setIcon(new ByteBuffer[] { new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("icon16.png")), false, false, null), new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("icon32.png")), false, false, null), new ImageIOImageData().imageToByteBuffer(ImageIO.read(new File("icon128.png")), false, false, null) });
 			Display.setDisplayMode(new DisplayMode(250, 70));
 			Display.create();
 			dpi = Toolkit.getDefaultToolkit().getScreenResolution();

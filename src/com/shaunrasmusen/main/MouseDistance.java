@@ -36,17 +36,19 @@ public class MouseDistance {
 	Point p;
 	boolean mouseClick;
 	int timer = 0;
+	String os = System.getProperty("os.name").toLowerCase().substring(0, 1);
 
 	static AngelCodeFont font, fontsmall;
 
 	public void run() {
+		System.out.println(os);
 		info = MouseInfo.getPointerInfo();
 		p = info.getLocation();
 		x = p.getX();
 		y = p.getY();
 
 		load();
-		
+
 		if (units == 1)
 			dpi = (int) (dpi / 3);
 
@@ -80,7 +82,7 @@ public class MouseDistance {
 			p = info.getLocation();
 			x = p.getX();
 			y = p.getY();
-			
+
 			if (units == 0) {
 				if (in > 12.0) {
 					ft++;
@@ -105,21 +107,21 @@ public class MouseDistance {
 				distStr = (int) (mi) + "km " + (int) (ft) + "m " + (int) (in) + "cm";
 			}
 
-			font.drawString((250 / 2) - (font.getWidth("Distance traveled by cursor:") / 2), 0, "Distance traveled by cursor:");
-			font.drawString((250 / 2) - (font.getWidth(distStr) / 2), 20, distStr);
+			font.drawString((Display.getWidth() / 2) - (font.getWidth("Distance traveled by cursor:") / 2), 0, "Distance traveled by cursor:");
+			font.drawString((Display.getWidth() / 2) - (font.getWidth(distStr) / 2), 20, distStr);
 
 			GL11.glMatrixMode(GL11.GL_PROJECTION);
 			GL11.glLoadIdentity();
-			GL11.glOrtho(0, 250 * 2, 80 * 2, 0, 1, -1);
+			GL11.glOrtho(0, Display.getWidth() * 2, Display.getHeight() * 2, 0, 1, -1);
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
-			
+
 			font.drawString(4, 110, "Left-Click for Statistics");
 			font.drawString(4, 130, "Right-Click for Unit Conv.");
-			font.drawString((250 - (font.getWidth("(c) 2015, Shaun Rasmusen") / 2)) * 2 - 10, 130, "(c) 2015, Shaun Rasmusen");
+			font.drawString((Display.getWidth() - (font.getWidth("(c) 2015, Shaun Rasmusen") / 2)) * 2 - 10, 130, "(c) 2015, Shaun Rasmusen");
 
 			GL11.glMatrixMode(GL11.GL_PROJECTION);
 			GL11.glLoadIdentity();
-			GL11.glOrtho(0, 250, 80, 0, 1, -1);
+			GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 			Display.sync(30);
@@ -144,7 +146,7 @@ public class MouseDistance {
 				ft++;
 				in -= 12;
 			}
-			
+
 			while (ft >= 5280) {
 				mi++;
 				ft -= 5280;
@@ -154,12 +156,12 @@ public class MouseDistance {
 			in = in * 2.54;
 			ft = ft / 0.3048;
 			mi = mi * 1.60934;
-			
+
 			while (in >= 100) {
 				ft++;
 				in -= 100;
 			}
-			
+
 			while (ft >= 1000) {
 				mi++;
 				ft -= 1000;
@@ -168,13 +170,14 @@ public class MouseDistance {
 	}
 
 	public void showStats() {
-		Display.setLocation((int) (dim.getWidth()) - 400, 0);
+		Display.setLocation((int) (dim.getWidth()) - 425, 0);
 		try {
-			Display.setDisplayMode(new DisplayMode(400, 151));
+			Display.setDisplayMode(new DisplayMode(425, 151));
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
 
+		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		timer = 0;
 
 		while (!mouseClick) {
@@ -192,32 +195,32 @@ public class MouseDistance {
 
 			GL11.glMatrixMode(GL11.GL_PROJECTION);
 			GL11.glLoadIdentity();
-			GL11.glOrtho(0, 400, 151, 0, 1, -1);
+			GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
-			
-			font.drawString(3, 0, "Statistics");
 
+			font.drawString(3, 0, "Statistics");
+			
 			GL11.glMatrixMode(GL11.GL_PROJECTION);
 			GL11.glLoadIdentity();
-			GL11.glOrtho(0, 400 * 1.25, 151 * 1.25, 0, 1, -1);
+			GL11.glOrtho(0, Display.getWidth() * 1.25, Display.getHeight() * 1.25, 0, 1, -1);
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 			if (units == 0) {
 				font.drawString(3, 31, "The cursor has:");
-				font.drawString(3, 53, "- climbed the Empire State Building " + df.format(((mi * 5280) + ft) / 		 1454) + " time(s),");
-				font.drawString(3, 75, "- dove down the Mariana Trench " + df.format(((mi * 5280) + ft) / 			 36070) + " time(s),");
+				font.drawString(3, 53, "- climbed the Empire State Building " + df.format(((mi * 5280) + ft) / 1454) + " time(s),");
+				font.drawString(3, 75, "- dove down the Mariana Trench " + df.format(((mi * 5280) + ft) / 36070) + " time(s),");
 				font.drawString(3, 97, "- gone to the International Space Station " + df.format(((mi * 5280) + ft) / 1314720) + " time(s),");
-				font.drawString(3, 119, "- reached the Earth's core " + df.format(((mi * 5280) + ft) / 				 20898240) + " time(s),");
-				font.drawString(3, 141, "- circled the Earth " + df.format(((mi * 5280) + ft) / 					 131477280) + " time(s),");
-				font.drawString(3, 163, "- gone to the Moon " + df.format(((mi * 5280) + ft) / 						 1261392000) + " time(s).");
+				font.drawString(3, 119, "- reached the Earth's core " + df.format(((mi * 5280) + ft) / 20898240) + " time(s),");
+				font.drawString(3, 141, "- circled the Earth " + df.format(((mi * 5280) + ft) / 131477280) + " time(s),");
+				font.drawString(3, 163, "- gone to the Moon " + df.format(((mi * 5280) + ft) / 1261392000) + " time(s).");
 			} else {
 				font.drawString(3, 31, "The cursor has:");
-				font.drawString(3, 53, "- climbed the Empire State Building " + df.format(((mi * 1000) + ft) / 		 443.1792) + " time(s),");
-				font.drawString(3, 75, "- dove down the Mariana Trench " + df.format(((mi * 1000) + ft) / 			 10994.136) + " time(s),");
+				font.drawString(3, 53, "- climbed the Empire State Building " + df.format(((mi * 1000) + ft) / 443.1792) + " time(s),");
+				font.drawString(3, 75, "- dove down the Mariana Trench " + df.format(((mi * 1000) + ft) / 10994.136) + " time(s),");
 				font.drawString(3, 97, "- gone to the International Space Station " + df.format(((mi * 1000) + ft) / 400726.656) + " time(s),");
-				font.drawString(3, 119, "- reached the Earth's core " + df.format(((mi * 1000) + ft) / 				 6369783.552) + " time(s),");
-				font.drawString(3, 141, "- circled the Earth " + df.format(((mi * 1000) + ft) / 					 40074274.944) + " time(s),");
-				font.drawString(3, 163, "- gone to the Moon " + df.format(((mi * 1000) + ft) / 						 384472281.6) + " time(s).");
+				font.drawString(3, 119, "- reached the Earth's core " + df.format(((mi * 1000) + ft) / 6369783.552) + " time(s),");
+				font.drawString(3, 141, "- circled the Earth " + df.format(((mi * 1000) + ft) / 40074274.944) + " time(s),");
+				font.drawString(3, 163, "- gone to the Moon " + df.format(((mi * 1000) + ft) / 384472281.6) + " time(s).");
 			}
 
 			Display.sync(30);
@@ -227,7 +230,7 @@ public class MouseDistance {
 
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
-		GL11.glOrtho(0, 400, 151, 0, 1, -1);
+		GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 		Display.setLocation((int) (dim.getWidth()) - 250, 0);
@@ -236,6 +239,7 @@ public class MouseDistance {
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
+		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 	}
 
 	public void load() {
@@ -291,11 +295,16 @@ public class MouseDistance {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
-		GL11.glOrtho(0, 250, 70, 0, 1, -1);
+		GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_BLEND);

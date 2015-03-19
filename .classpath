@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="/Users/shaunrasmusen/Documents/workspace/slick/lib/jinput.jar"/>
-	<classpathentry kind="lib" path="/Users/shaunrasmusen/Documents/workspace/slick/lib/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="/Users/shaunrasmusen/Documents/workspace/slick/lib/jnlp.jar"/>
 	<classpathentry kind="lib" path="/Users/shaunrasmusen/Documents/workspace/slick/lib/lwjgl.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/shaunrasmusen/Documents/workspace/slick"/>
